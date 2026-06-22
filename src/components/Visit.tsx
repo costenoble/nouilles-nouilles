@@ -188,12 +188,12 @@ export default function Visit() {
         </div>
 
         {/* contact & private hire — bento */}
-        <div className="mt-16 md:mt-24">
+        <div className="mt-14 md:mt-20">
           <Reveal>
             <p className="eyebrow text-chili">{t.visit.contactTitle}</p>
           </Reveal>
           <Reveal delay={0.05}>
-            <h3 className="display-lg mt-3 text-ink">
+            <h3 className="mt-3 font-display text-3xl text-ink sm:text-4xl">
               {locale === "fr" ? "Parlons-en" : "Let's talk"}
             </h3>
           </Reveal>
@@ -201,10 +201,10 @@ export default function Visit() {
             <p className="mt-3 max-w-md text-base text-ink-soft">{t.visit.contactBody}</p>
           </Reveal>
 
-          <div className="mt-8 grid gap-4 lg:grid-cols-12">
+          <div className="mt-7 grid gap-4 lg:grid-cols-12 lg:items-start">
             {/* form card */}
             <Reveal delay={0.1} className="lg:col-span-7">
-              <div className="h-full rounded-3xl border border-line bg-paper p-6 sm:p-8">
+              <div className="h-full rounded-3xl border border-line bg-paper p-5 sm:p-6">
                 <AnimatePresence mode="wait">
                   {sent ? (
                     <motion.div
@@ -239,12 +239,12 @@ export default function Visit() {
                         }).catch(() => {});
                         setSent(true);
                       }}
-                      className="space-y-4"
+                      className="space-y-3"
                     >
-                      <p className="font-display text-xl text-ink">
+                      <p className="font-display text-lg text-ink">
                         {locale === "fr" ? "Écrivez-nous" : "Drop us a line"}
                       </p>
-                      <div className="grid gap-4 sm:grid-cols-2">
+                      <div className="grid gap-3 sm:grid-cols-2">
                         <input type="text" name="name" required placeholder={t.visit.cName} className={fieldClass} />
                         <input type="email" name="email" required placeholder={t.visit.cEmail} className={fieldClass} />
                       </div>
@@ -278,7 +278,7 @@ export default function Visit() {
             </Reveal>
 
             {/* action tiles — transparentes, sobres */}
-            <div className="flex flex-col gap-4 lg:col-span-5">
+            <div className="flex flex-col gap-3 lg:col-span-5">
               {[
                 {
                   href: `tel:${t.visit.phone.replace(/\s/g, "")}`,
@@ -305,20 +305,20 @@ export default function Visit() {
                   delay: 0.25,
                 },
               ].map((tile) => (
-                <Reveal key={tile.label} delay={tile.delay} className="flex-1">
+                <Reveal key={tile.label} delay={tile.delay}>
                   <a
                     href={tile.href}
                     {...(tile.external ? { target: "_blank", rel: "noreferrer" } : {})}
-                    className="group flex h-full items-center gap-4 rounded-3xl border border-line bg-transparent p-5 text-ink transition duration-300 hover:-translate-y-1 hover:border-ink/25 hover:bg-paper hover:shadow-[0_18px_40px_-24px_rgba(27,26,22,0.45)]"
+                    className="group flex items-center gap-3.5 rounded-2xl border border-line bg-transparent p-3.5 text-ink transition duration-300 hover:-translate-y-0.5 hover:border-ink/25 hover:bg-paper hover:shadow-[0_14px_30px_-22px_rgba(27,26,22,0.45)]"
                   >
-                    <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-cream-deep text-ink transition-colors duration-300 group-hover:bg-ink group-hover:text-paper">
+                    <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-cream-deep text-ink transition-colors duration-300 group-hover:bg-ink group-hover:text-paper">
                       {tile.icon}
                     </span>
                     <span className="min-w-0 flex-1">
-                      <span className="block text-xs uppercase tracking-wider text-ink-soft">
+                      <span className="block text-[0.7rem] uppercase tracking-wider text-ink-soft">
                         {tile.label}
                       </span>
-                      <span className="block truncate font-display text-lg text-ink">{tile.value}</span>
+                      <span className="block truncate font-display text-base text-ink">{tile.value}</span>
                     </span>
                     <span className="text-ink-soft transition-transform group-hover:translate-x-1">→</span>
                   </a>
