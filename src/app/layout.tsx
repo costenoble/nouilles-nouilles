@@ -1,8 +1,9 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Fraunces, Inter } from "next/font/google";
 import "./globals.css";
 import { LanguageProvider } from "@/i18n/LanguageProvider";
 import { StoreProvider } from "@/store/store";
+import ServiceWorkerRegister from "@/components/ServiceWorkerRegister";
 
 const fraunces = Fraunces({
   subsets: ["latin"],
@@ -35,6 +36,20 @@ export const metadata: Metadata = {
     type: "website",
     locale: "fr_FR",
   },
+  manifest: "/manifest.webmanifest",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Nouilles Nouilles",
+  },
+  icons: {
+    icon: "/icon.svg",
+    apple: "/apple-icon.png",
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#1b1a16",
 };
 
 export default function RootLayout({
@@ -46,6 +61,7 @@ export default function RootLayout({
         <LanguageProvider>
           <StoreProvider>{children}</StoreProvider>
         </LanguageProvider>
+        <ServiceWorkerRegister />
       </body>
     </html>
   );

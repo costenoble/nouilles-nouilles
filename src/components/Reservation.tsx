@@ -38,6 +38,12 @@ export default function Reservation() {
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
     addReservation({ date, time, guests, name, phone, email, notes });
+    // notify the restaurant (no-op in demo without RESEND_API_KEY)
+    fetch("/api/notify", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ type: "reservation", date, time, guests, name, phone, email, notes }),
+    }).catch(() => {});
     setSent(true);
   };
 

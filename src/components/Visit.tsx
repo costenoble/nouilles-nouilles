@@ -258,15 +258,27 @@ export default function Visit() {
                     animate={{ opacity: 1 }}
                     onSubmit={(e) => {
                       e.preventDefault();
+                      const fd = new FormData(e.currentTarget);
+                      fetch("/api/notify", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                          type: "contact",
+                          name: fd.get("name"),
+                          email: fd.get("email"),
+                          subject: fd.get("subject"),
+                          message: fd.get("message"),
+                        }),
+                      }).catch(() => {});
                       setSent(true);
                     }}
                     className="space-y-4"
                   >
                     <div className="grid gap-4 sm:grid-cols-2">
-                      <input type="text" required placeholder={t.visit.cName} className={fieldClass} />
-                      <input type="email" required placeholder={t.visit.cEmail} className={fieldClass} />
+                      <input type="text" name="name" required placeholder={t.visit.cName} className={fieldClass} />
+                      <input type="email" name="email" required placeholder={t.visit.cEmail} className={fieldClass} />
                     </div>
-                    <select required defaultValue="" className={fieldClass}>
+                    <select name="subject" required defaultValue="" className={fieldClass}>
                       <option value="" disabled className="text-ink">
                         {t.visit.cSubject}
                       </option>
@@ -278,6 +290,7 @@ export default function Visit() {
                     </select>
                     <textarea
                       rows={4}
+                      name="message"
                       required
                       placeholder={t.visit.cMessage}
                       className={fieldClass}

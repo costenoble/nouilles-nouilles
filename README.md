@@ -25,9 +25,28 @@ npm run dev      # http://localhost:3000
 
 Admin : http://localhost:3000/admin — identifiant `admin` · mot de passe `admin` (démo).
 
+## 📱 PWA (installable)
+
+Le site **et** l'espace admin sont une Progressive Web App : installables sur téléphone
+(« Ajouter à l'écran d'accueil »), avec icône, écran de démarrage et page hors-ligne.
+Le service worker est actif **en production** (build/Vercel), pas en `npm run dev`.
+
+## 🔔 Notifications
+
+Quand un client réserve (ou envoie un message), le restaurant reçoit un e-mail via
+[Resend](https://resend.com). Configurer les variables (voir `.env.example`) :
+
+```bash
+RESEND_API_KEY=...                 # clé Resend
+RESTAURANT_EMAIL=...               # adresse qui reçoit les demandes
+RESEND_FROM=Nouilles Nouilles <onboarding@resend.dev>
+```
+
+Sans clé, le site reste fonctionnel (mode démo, aucun e-mail envoyé).
+
 ## 🛠 Stack
 
-Next.js 16 · React 19 · TypeScript · Tailwind CSS v4 · Framer Motion.
+Next.js 16 · React 19 · TypeScript · Tailwind CSS v4 · Framer Motion · Resend.
 
 ## 📦 Notes démo
 
