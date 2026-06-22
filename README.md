@@ -1,36 +1,36 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# NOUILLES NOUILLES — site démo
 
-## Getting Started
+Site vitrine immersif pour **NOUILLES NOUILLES**, restaurant asiatique de nouilles fraîches à Rennes
+(48 rue Legraverend, 35000 Rennes).
 
-First, run the development server:
+> Démo de présentation — proposition commerciale. Données et formulaires en local (sans backend).
+
+## ✨ Fonctionnalités
+
+- **Hero immersif** : bols de nouilles flottants et déplaçables à la souris / au doigt
+- **Carte interactive** : filtres (catégorie, végé), badges piment, **allergènes** détaillés, photos des signatures
+- **Réservation en ligne** : horloge analogique, créneaux midi/soir, indicateur de tables restantes
+- **Galerie** photo (bento + lightbox), **Google Maps** intégré, **avis Google**, **newsletter**
+- **Contact & privatisation** + bouton **WhatsApp** flottant
+- **Bilingue FR / EN** (bascule instantanée)
+- **Espace admin** (`/admin`) : gestion des réservations (accepter / refuser, capacité),
+  édition de la carte et des prix, gestion de la galerie (upload par glisser-déposer)
+
+## 🚀 Démarrer
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev      # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Admin : http://localhost:3000/admin — identifiant `admin` · mot de passe `admin` (démo).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🛠 Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Next.js 16 · React 19 · TypeScript · Tailwind CSS v4 · Framer Motion.
 
-## Learn More
+## 📦 Notes démo
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Les données (carte, galerie, réservations) sont stockées en `localStorage` du navigateur
+  (pas de base de données) — parfait pour la démo, à brancher sur un vrai backend en production.
+- Authentification admin volontairement simplifiée pour la démonstration.
