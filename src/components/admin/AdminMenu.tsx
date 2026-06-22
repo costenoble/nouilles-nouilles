@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import {
   allergenLabels,
   categoryOrder,
@@ -9,6 +10,7 @@ import {
   type Dish,
 } from "@/data/menu";
 import { useStore } from "@/store/store";
+import { fileToDataUrl } from "@/lib/image";
 
 const catLabel: Record<Category, string> = {
   noodles: "Nouilles sautées",
@@ -98,6 +100,53 @@ export default function AdminMenu() {
                     {/* editor */}
                     {open && (
                       <div className="space-y-3 border-t border-line p-4">
+                        {/* photo */}
+                        <div>
+                          <span className="mb-1.5 block text-xs text-ink-soft">Photo du plat</span>
+                          <div className="flex items-center gap-3">
+                            <div className="relative grid h-20 w-20 shrink-0 place-items-center overflow-hidden rounded-xl border border-line bg-cream">
+                              {d.image ? (
+                                <Image
+                                  src={d.image}
+                                  alt={d.name.fr}
+                                  fill
+                                  sizes="80px"
+                                  unoptimized={d.image.startsWith("data:")}
+                                  className="object-cover"
+                                />
+                              ) : (
+                                <span className="text-2xl opacity-40">🍜</span>
+                              )}
+                            </div>
+                            <div className="flex flex-col items-start gap-2">
+                              <label className="cursor-pointer rounded-full bg-ink px-4 py-2 text-xs font-semibold text-paper transition hover:bg-ink-soft">
+                                {d.image ? "Changer la photo" : "Ajouter une photo"}
+                                <input
+                                  type="file"
+                                  accept="image/*"
+                                  className="hidden"
+                                  onChange={async (e) => {
+                                    const f = e.target.files?.[0];
+                                    if (f) {
+                                      const src = await fileToDataUrl(f);
+                                      updateDish(d.id, { image: src });
+                                    }
+                                    e.target.value = "";
+                                  }}
+                                />
+                              </label>
+                              {d.image && (
+                                <button
+                                  onClick={() => updateDish(d.id, { image: undefined })}
+                                  className="text-xs font-medium text-ink-soft transition hover:text-chili"
+                                >
+                                  Retirer la photo
+                                </button>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+
                         <div className="grid gap-3 sm:grid-cols-2">
                           <label className="block">
                             <span className="mb-1 block text-xs text-ink-soft">Nom (FR)</span>

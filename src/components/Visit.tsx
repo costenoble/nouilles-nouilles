@@ -118,12 +118,12 @@ export default function Visit() {
                 rel="noreferrer"
                 className="group mt-6 block"
               >
-                <span className="font-display text-3xl leading-tight text-ink sm:text-4xl">
+                <span className="block font-display text-3xl leading-tight text-ink sm:text-4xl">
                   48 rue Legraverend
                   <br />
                   <span className="text-ink-soft">35000 Rennes</span>
                 </span>
-                <span className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-chili">
+                <span className="mt-4 flex w-fit items-center gap-1.5 text-sm font-semibold text-chili">
                   {t.visit.directions}
                   <span className="transition-transform group-hover:translate-x-1">→</span>
                 </span>

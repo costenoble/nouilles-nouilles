@@ -82,6 +82,7 @@ function Preview({ dish }: { dish: Dish }) {
               alt={dish.name[locale]}
               fill
               sizes="(max-width:1024px) 100vw, 45vw"
+              unoptimized={dish.image.startsWith("data:")}
               className="object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/10 to-transparent" />
@@ -156,6 +157,76 @@ function Preview({ dish }: { dish: Dish }) {
   );
 }
 
+function DishCard({ dish }: { dish: Dish }) {
+  const { t, locale } = useI18n();
+  return (
+    <article className="flex gap-4 rounded-2xl border border-line bg-paper p-3">
+      <div
+        className={`relative h-24 w-24 shrink-0 overflow-hidden rounded-xl ${
+          dish.image ? "" : tile[dish.category].bg
+        }`}
+      >
+        {dish.image ? (
+          <Image
+            src={dish.image}
+            alt={dish.name[locale]}
+            fill
+            sizes="96px"
+            unoptimized={dish.image.startsWith("data:")}
+            className="object-cover"
+          />
+        ) : (
+          <NoodleArt
+            className={`absolute inset-x-0 bottom-1 h-12 w-full ${tile[dish.category].fg} opacity-50`}
+          />
+        )}
+        {dish.signature && (
+          <span className="absolute left-1 top-1 rounded-full bg-peach px-1.5 py-0.5 text-[0.55rem] font-bold uppercase tracking-wide text-ink">
+            ★
+          </span>
+        )}
+      </div>
+
+      <div className="min-w-0 flex-1">
+        <div className="flex items-baseline justify-between gap-2">
+          <h3 className="font-display text-base leading-tight text-ink">{dish.name[locale]}</h3>
+          <span className="shrink-0 font-display text-base font-semibold text-ink">
+            {price(dish.price, locale)}
+          </span>
+        </div>
+        <p className="mt-1 line-clamp-2 text-xs leading-snug text-ink-soft">{dish.desc[locale]}</p>
+        <div className="mt-2 flex flex-wrap items-center gap-1">
+          {dish.veg && (
+            <span className="inline-flex items-center gap-0.5 rounded-full bg-forest/10 px-1.5 py-0.5 text-[0.6rem] font-semibold text-forest">
+              <Leaf className="h-2.5 w-2.5" /> {t.menu.vegLabel}
+            </span>
+          )}
+          {!!dish.spicy && (
+            <span className="inline-flex items-center rounded-full bg-chili/10 px-1.5 py-0.5 text-chili">
+              {Array.from({ length: dish.spicy }).map((_, i) => (
+                <Flame key={i} className="h-2.5 w-2.5" />
+              ))}
+            </span>
+          )}
+          {dish.allergens.map((a) => (
+            <span
+              key={a}
+              className="rounded-full border border-line px-1.5 py-0.5 text-[0.6rem] text-ink-soft"
+            >
+              {allergenLabels[a][locale]}
+            </span>
+          ))}
+          {dish.allergens.length === 0 && (
+            <span className="rounded-full bg-peach/25 px-1.5 py-0.5 text-[0.6rem] font-medium text-ink-soft">
+              {locale === "fr" ? "Sans allergène majeur" : "No major allergen"}
+            </span>
+          )}
+        </div>
+      </div>
+    </article>
+  );
+}
+
 export default function Menu() {
   const { t, locale } = useI18n();
   const { menu } = useStore();
@@ -217,12 +288,12 @@ export default function Menu() {
         </div>
 
         {/* filters */}
-        <div className="mt-12 flex flex-wrap items-center gap-2.5">
+        <div className="no-scrollbar mt-10 -mx-5 flex items-center gap-2.5 overflow-x-auto px-5 pb-1 md:mx-0 md:flex-wrap md:overflow-visible md:px-0 md:pb-0">
           {(["all", ...categoryOrder] as const).map((c) => (
             <button
               key={c}
               onClick={() => selectFilter(c)}
-              className={`rounded-full border px-4 py-2 text-sm font-medium transition ${
+              className={`shrink-0 rounded-full border px-4 py-2 text-sm font-medium transition ${
                 active === c
                   ? "border-ink bg-ink text-paper"
                   : "border-line bg-paper text-ink-soft hover:border-ink/30"
@@ -233,7 +304,7 @@ export default function Menu() {
           ))}
           <button
             onClick={() => setVegOnly((v) => !v)}
-            className={`ml-auto inline-flex items-center gap-1.5 rounded-full border px-4 py-2 text-sm font-medium transition ${
+            className={`inline-flex shrink-0 items-center gap-1.5 rounded-full border px-4 py-2 text-sm font-medium transition md:ml-auto ${
               vegOnly
                 ? "border-forest bg-forest text-paper"
                 : "border-line bg-paper text-ink-soft hover:border-forest/40"
@@ -243,73 +314,71 @@ export default function Menu() {
           </button>
         </div>
 
-        {/* immersive split: sticky preview + list */}
-        <div className="mt-10 grid gap-8 lg:grid-cols-[0.85fr_1fr] lg:gap-12">
-          <Reveal className="lg:order-1">
-            <div className="relative h-[360px] overflow-hidden rounded-[1.75rem] ring-1 ring-black/5 sm:h-[440px] lg:sticky lg:top-28 lg:h-[70vh]">
+        {/* desktop: immersive split (sticky preview + lean list) */}
+        <div className="mt-10 hidden gap-12 lg:grid lg:grid-cols-[0.85fr_1fr]">
+          <div className="lg:order-1">
+            <div className="relative overflow-hidden rounded-[1.75rem] ring-1 ring-black/5 lg:sticky lg:top-28 lg:h-[70vh]">
               <Preview dish={current} />
             </div>
-          </Reveal>
+          </div>
 
           <div className="lg:order-2">
             <ul className="divide-y divide-line/80 border-t border-line/80">
-              <AnimatePresence initial={false}>
-                {filtered.map((d) => {
-                  const isActive = current.id === d.id;
-                  return (
-                    <motion.li
-                      key={d.id}
-                      layout
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.35 }}
+              {filtered.map((d) => {
+                const isActive = current.id === d.id;
+                return (
+                  <li key={d.id}>
+                    <button
+                      onMouseEnter={() => setActiveId(d.id)}
+                      onFocus={() => setActiveId(d.id)}
+                      onClick={() => setActiveId(d.id)}
+                      className="group flex w-full items-center gap-4 py-5 text-left"
                     >
-                      <button
-                        onMouseEnter={() => setActiveId(d.id)}
-                        onFocus={() => setActiveId(d.id)}
-                        onClick={() => setActiveId(d.id)}
-                        className="group flex w-full items-center gap-4 py-5 text-left"
-                      >
-                        <span
-                          className={`hidden h-px shrink-0 bg-chili transition-all duration-300 sm:block ${
-                            isActive ? "w-8" : "w-0"
-                          }`}
-                        />
-                        <span className="min-w-0 flex-1">
-                          <span className="flex items-baseline justify-between gap-4">
-                            <span
-                              className={`font-display text-xl leading-tight transition-colors sm:text-2xl ${
-                                isActive ? "text-chili" : "text-ink"
-                              }`}
-                            >
-                              {d.name[locale]}
-                            </span>
-                            <span className="shrink-0 font-display text-lg text-ink">
-                              {price(d.price, locale)}
-                            </span>
+                      <span
+                        className={`h-px shrink-0 bg-chili transition-all duration-300 ${
+                          isActive ? "w-8" : "w-0"
+                        }`}
+                      />
+                      <span className="min-w-0 flex-1">
+                        <span className="flex items-baseline justify-between gap-4">
+                          <span
+                            className={`font-display text-2xl leading-tight transition-colors ${
+                              isActive ? "text-chili" : "text-ink"
+                            }`}
+                          >
+                            {d.name[locale]}
                           </span>
-                          <span className="mt-1 flex items-center gap-3 text-xs text-ink-soft">
-                            {d.veg && <Leaf className="h-3.5 w-3.5 text-forest" />}
-                            {!!d.spicy &&
-                              Array.from({ length: d.spicy }).map((_, i) => (
-                                <Flame key={i} className="-ml-2.5 h-3.5 w-3.5 text-chili first:ml-0" />
-                              ))}
-                            <span className="truncate">{d.desc[locale]}</span>
+                          <span className="shrink-0 font-display text-lg text-ink">
+                            {price(d.price, locale)}
                           </span>
                         </span>
-                      </button>
-                    </motion.li>
-                  );
-                })}
-              </AnimatePresence>
+                        <span className="mt-1 flex items-center gap-3 text-xs text-ink-soft">
+                          {d.veg && <Leaf className="h-3.5 w-3.5 text-forest" />}
+                          {!!d.spicy &&
+                            Array.from({ length: d.spicy }).map((_, i) => (
+                              <Flame key={i} className="-ml-2.5 h-3.5 w-3.5 text-chili first:ml-0" />
+                            ))}
+                          <span className="truncate">{d.desc[locale]}</span>
+                        </span>
+                      </span>
+                    </button>
+                  </li>
+                );
+              })}
             </ul>
-
-            <p className="mt-8 max-w-md text-sm leading-relaxed text-ink-soft">
-              {t.menu.noteAllergen}
-            </p>
           </div>
         </div>
+
+        {/* mobile / tablet: rich cards */}
+        <div className="mt-8 grid gap-3 md:grid-cols-2 lg:hidden">
+          {filtered.map((d) => (
+            <DishCard key={d.id} dish={d} />
+          ))}
+        </div>
+
+        <p className="mt-8 max-w-md text-sm leading-relaxed text-ink-soft">
+          {t.menu.noteAllergen}
+        </p>
       </div>
     </section>
   );

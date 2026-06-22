@@ -22,10 +22,11 @@ export default function AnalogClock({ time }: { time: string }) {
           {/* hour ticks */}
           {Array.from({ length: 12 }).map((_, i) => {
             const a = (i / 12) * Math.PI * 2;
-            const x1 = 100 + Math.sin(a) * 82;
-            const y1 = 100 - Math.cos(a) * 82;
-            const x2 = 100 + Math.sin(a) * (i % 3 === 0 ? 72 : 77);
-            const y2 = 100 - Math.cos(a) * (i % 3 === 0 ? 72 : 77);
+            const r = (n: number) => Math.round(n * 100) / 100;
+            const x1 = r(100 + Math.sin(a) * 82);
+            const y1 = r(100 - Math.cos(a) * 82);
+            const x2 = r(100 + Math.sin(a) * (i % 3 === 0 ? 72 : 77));
+            const y2 = r(100 - Math.cos(a) * (i % 3 === 0 ? 72 : 77));
             return (
               <line
                 key={i}
