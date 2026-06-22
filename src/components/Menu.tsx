@@ -66,13 +66,13 @@ const tile: Record<Category, { bg: string; fg: string }> = {
 function Preview({ dish }: { dish: Dish }) {
   const { t, locale } = useI18n();
   return (
-    <AnimatePresence mode="wait">
+    <AnimatePresence>
       <motion.div
         key={dish.id}
-        initial={{ opacity: 0, scale: 1.02 }}
-        animate={{ opacity: 1, scale: 1 }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 0.25, ease: "easeOut" }}
         className="absolute inset-0"
       >
         {dish.image ? (
@@ -81,6 +81,7 @@ function Preview({ dish }: { dish: Dish }) {
               src={dish.image}
               alt={dish.name[locale]}
               fill
+              priority
               sizes="(max-width:1024px) 100vw, 45vw"
               unoptimized={dish.image.startsWith("data:")}
               className="object-cover"
