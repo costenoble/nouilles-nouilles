@@ -31,6 +31,7 @@ export const dictionaries = {
       eyebrow: "Notre maison",
       title: "Il n'y a pas de meilleure façon de se réunir qu'autour d'un bol fumant.",
       body: "Nouilles Nouilles, c'est l'envie de retrouver le geste : la pâte travaillée à la main, le bouillon qui mijote, la table que l'on partage. On cuisine simple et généreux, avec des produits frais et de saison.",
+      signature: "— Toute l'équipe Nouilles Nouilles",
       stepsTitle: "Notre savoir-faire",
       steps: [
         { n: "01", t: "La pâte", d: "Tirée à la main chaque matin, jamais industrielle." },
@@ -176,6 +177,7 @@ export const dictionaries = {
       eyebrow: "Our house",
       title: "There's no better way to gather than around a steaming bowl.",
       body: "Nouilles Nouilles is about the craft: dough worked by hand, broth left to simmer, a table made for sharing. We cook simply and generously, with fresh, seasonal produce.",
+      signature: "— The whole Nouilles Nouilles team",
       stepsTitle: "Our craft",
       steps: [
         { n: "01", t: "The dough", d: "Hand-pulled every morning, never industrial." },

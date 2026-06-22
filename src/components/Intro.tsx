@@ -23,35 +23,41 @@ export default function Intro() {
           <Reveal>
             <p className="eyebrow text-peach">{t.intro.eyebrow}</p>
           </Reveal>
+          <Reveal delay={0.05}>
+            <h2 className="display-lg mt-6 max-w-3xl text-paper">{t.intro.title}</h2>
+          </Reveal>
 
-          <div className="mt-10 grid gap-12 lg:grid-cols-[1.4fr_1fr] lg:items-end">
-            <Reveal delay={0.05}>
-              <h2 className="display-lg max-w-3xl text-paper">{t.intro.title}</h2>
+          <div className="mt-12 grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-16">
+            <Reveal delay={0.1}>
+              <div className="lg:pr-6">
+                <span className="mb-6 block h-px w-16 bg-peach/60" />
+                <p className="max-w-md text-lg leading-relaxed text-paper/85">
+                  {t.intro.body}
+                </p>
+                <p className="mt-8 font-display text-xl italic text-peach">
+                  {t.intro.signature}
+                </p>
+              </div>
             </Reveal>
+
             <Reveal delay={0.15}>
-              <p className="max-w-md text-base leading-relaxed text-paper/80">
-                {t.intro.body}
-              </p>
+              <div
+                ref={imgRef}
+                className="relative aspect-[4/3] w-full overflow-hidden rounded-3xl"
+              >
+                <motion.div style={{ y }} className="absolute inset-x-0 -top-[6%] h-[112%]">
+                  <Image
+                    src="/intro-gyoza.jpg"
+                    alt="Gyozas poêlés maison"
+                    fill
+                    sizes="(max-width:1024px) 100vw, 580px"
+                    className="object-cover object-center"
+                  />
+                </motion.div>
+                <div className="absolute inset-0 bg-gradient-to-t from-forest-deep/40 to-transparent" />
+              </div>
             </Reveal>
           </div>
-
-          <Reveal delay={0.1}>
-            <div
-              ref={imgRef}
-              className="relative mt-14 aspect-[16/10] w-full overflow-hidden rounded-3xl sm:aspect-[16/9]"
-            >
-              <motion.div style={{ y }} className="absolute inset-x-0 -top-[6%] h-[112%]">
-                <Image
-                  src="/intro-gyoza.jpg"
-                  alt="Gyozas poêlés maison"
-                  fill
-                  sizes="(max-width:768px) 100vw, 1200px"
-                  className="object-cover object-center"
-                />
-              </motion.div>
-              <div className="absolute inset-0 bg-gradient-to-t from-forest-deep/40 to-transparent" />
-            </div>
-          </Reveal>
         </div>
       </div>
 
