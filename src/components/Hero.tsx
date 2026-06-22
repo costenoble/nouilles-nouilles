@@ -16,14 +16,15 @@ type Bowl = {
   mobile?: boolean; // show on mobile
 };
 
+// Positions kept to the edges so the central column (title + CTAs + hint) stays clear.
 const bowls: Bowl[] = [
-  { src: "/dishes/nouilles-sautees.jpg", size: 168, top: "16%", left: "7%", r: -7, dur: 7.5, delay: 0, mobile: true },
-  { src: "/dishes/poulet-croustillant.jpg", size: 150, top: "60%", left: "80%", r: 6, dur: 8.5, delay: 0.6, mobile: true },
-  { src: "/dishes/pho-boeuf.jpg", size: 124, top: "63%", left: "10%", r: 5, dur: 7, delay: 1.1 },
-  { src: "/dishes/gyoza.jpg", size: 132, top: "18%", left: "79%", r: 9, dur: 6.8, delay: 0.3 },
-  { src: "/dishes/pho-boeuf.jpg", size: 78, top: "8%", left: "44%", r: -4, dur: 6, delay: 0.9, mobile: true },
-  { src: "/dishes/gyoza.jpg", size: 88, top: "78%", left: "46%", r: 7, dur: 7.8, delay: 0.2 },
-  { src: "/dishes/nouilles-sautees.jpg", size: 70, top: "40%", left: "92%", r: -8, dur: 6.4, delay: 1.4 },
+  { src: "/dishes/nouilles-sautees.jpg", size: 168, top: "15%", left: "5%", r: -7, dur: 7.5, delay: 0, mobile: true },
+  { src: "/dishes/poulet-croustillant.jpg", size: 150, top: "16%", left: "82%", r: 6, dur: 8.5, delay: 0.6, mobile: true },
+  { src: "/dishes/pho-boeuf.jpg", size: 124, top: "66%", left: "7%", r: 5, dur: 7, delay: 1.1 },
+  { src: "/dishes/gyoza.jpg", size: 132, top: "63%", left: "83%", r: 9, dur: 6.8, delay: 0.3 },
+  { src: "/dishes/pho-boeuf.jpg", size: 78, top: "11%", left: "24%", r: -4, dur: 6, delay: 0.9 },
+  { src: "/dishes/gyoza.jpg", size: 88, top: "82%", left: "20%", r: 7, dur: 7.8, delay: 0.2 },
+  { src: "/dishes/nouilles-sautees.jpg", size: 70, top: "84%", left: "80%", r: -8, dur: 6.4, delay: 1.4, mobile: true },
 ];
 
 export default function Hero() {

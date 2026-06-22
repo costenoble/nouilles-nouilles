@@ -16,8 +16,9 @@ export default function Intro() {
   const y = useTransform(scrollYProgress, [0, 1], ["-11%", "11%"]);
 
   return (
-    <section id="intro" className="bg-cream px-[15px] py-8 md:py-12">
-      <div className="overflow-hidden rounded-[2%] bg-forest text-paper">
+    <section id="intro" className="bg-cream py-8 md:py-12">
+      {/* green "Notre maison" card */}
+      <div className="mx-[15px] overflow-hidden rounded-[2%] bg-forest text-paper">
         <div className="mx-auto max-w-7xl px-6 py-24 sm:px-10 md:px-14 md:py-32">
           <Reveal>
             <p className="eyebrow text-peach">{t.intro.eyebrow}</p>
@@ -51,27 +52,28 @@ export default function Intro() {
               <div className="absolute inset-0 bg-gradient-to-t from-forest-deep/40 to-transparent" />
             </div>
           </Reveal>
+        </div>
+      </div>
 
-          <div className="mt-16 border-t border-paper/15 pt-12">
-            <Reveal>
-              <p className="eyebrow text-center text-peach">{t.intro.stepsTitle}</p>
+      {/* savoir-faire — below the card, on cream */}
+      <div className="mx-auto mt-14 max-w-7xl px-5 md:mt-20 md:px-8">
+        <Reveal>
+          <p className="eyebrow text-center text-chili">{t.intro.stepsTitle}</p>
+        </Reveal>
+        <div className="mt-10 grid grid-cols-1 divide-y divide-line sm:grid-cols-3 sm:divide-x sm:divide-y-0">
+          {t.intro.steps.map((s, i) => (
+            <Reveal key={i} delay={i * 0.12}>
+              <div className="group flex h-full flex-col items-center px-6 py-8 text-center sm:py-2">
+                <span className="font-display text-4xl text-chili/60 transition-colors group-hover:text-chili">
+                  {s.n}
+                </span>
+                <span className="mt-3 font-display text-2xl text-ink">{s.t}</span>
+                <p className="mt-3 max-w-[26ch] text-sm leading-relaxed text-ink-soft">
+                  {s.d}
+                </p>
+              </div>
             </Reveal>
-            <div className="mt-10 grid grid-cols-1 divide-y divide-paper/15 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
-              {t.intro.steps.map((s, i) => (
-                <Reveal key={i} delay={i * 0.12}>
-                  <div className="group flex h-full flex-col items-center px-6 py-8 text-center sm:py-2">
-                    <span className="font-display text-4xl text-peach/70 transition-colors group-hover:text-peach">
-                      {s.n}
-                    </span>
-                    <span className="mt-3 font-display text-2xl text-paper">{s.t}</span>
-                    <p className="mt-3 max-w-[26ch] text-sm leading-relaxed text-paper/70">
-                      {s.d}
-                    </p>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </section>

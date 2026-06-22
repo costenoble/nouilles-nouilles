@@ -4,6 +4,7 @@ import "./globals.css";
 import { LanguageProvider } from "@/i18n/LanguageProvider";
 import { StoreProvider } from "@/store/store";
 import ServiceWorkerRegister from "@/components/ServiceWorkerRegister";
+import ScrollManager from "@/components/ScrollManager";
 
 const fraunces = Fraunces({
   subsets: ["latin"],
@@ -61,6 +62,7 @@ export default function RootLayout({
         <LanguageProvider>
           <StoreProvider>{children}</StoreProvider>
         </LanguageProvider>
+        <ScrollManager />
         <ServiceWorkerRegister />
       </body>
     </html>
