@@ -81,7 +81,7 @@ export default function Visit() {
   }, []);
 
   const fieldClass =
-    "w-full rounded-xl border border-line bg-cream px-4 py-3 text-ink placeholder:text-ink-soft/50 outline-none transition hover:border-ink/20 focus:border-chili";
+    "w-full rounded-xl border border-paper/20 bg-paper/5 px-4 py-3 text-paper placeholder:text-paper/40 outline-none transition hover:border-paper/35 focus:border-peach focus:bg-paper/10";
   const waLink = `https://wa.me/${t.visit.phone.replace(/[^0-9]/g, "")}`;
 
   return (
@@ -187,146 +187,140 @@ export default function Visit() {
           </Reveal>
         </div>
 
-        {/* contact & private hire — bento */}
-        <div className="mt-14 md:mt-20">
-          <Reveal>
-            <p className="eyebrow text-chili">{t.visit.contactTitle}</p>
-          </Reveal>
-          <Reveal delay={0.05}>
-            <h3 className="mt-3 font-display text-3xl text-ink sm:text-4xl">
-              {locale === "fr" ? "Parlons-en" : "Let's talk"}
-            </h3>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <p className="mt-3 max-w-md text-base text-ink-soft">{t.visit.contactBody}</p>
-          </Reveal>
+        {/* contact & private hire — forest panel (DA du site) */}
+        <Reveal delay={0.05}>
+          <div className="relative mt-14 overflow-hidden rounded-[2rem] bg-forest text-paper md:mt-20">
+            <div className="pointer-events-none absolute -right-24 -top-28 h-72 w-72 rounded-full bg-chili/25 blur-3xl" />
+            <div className="pointer-events-none absolute -bottom-28 -left-20 h-64 w-64 rounded-full bg-peach/15 blur-3xl" />
 
-          <div className="mt-7 grid gap-4 lg:grid-cols-12 lg:items-start">
-            {/* form card */}
-            <Reveal delay={0.1} className="lg:col-span-7">
-              <div className="h-full rounded-3xl border border-line bg-paper p-5 sm:p-6">
-                <AnimatePresence mode="wait">
-                  {sent ? (
-                    <motion.div
-                      key="ok"
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="flex min-h-[320px] flex-col items-center justify-center gap-4 text-center"
+            <div className="relative grid gap-10 p-7 sm:p-10 lg:grid-cols-2 lg:gap-14 lg:p-12">
+              {/* left: intro + contact links */}
+              <div>
+                <p className="eyebrow text-peach">{t.visit.contactTitle}</p>
+                <h3 className="mt-4 font-display text-3xl text-paper sm:text-4xl">
+                  {locale === "fr" ? "Parlons-en" : "Let's talk"}
+                </h3>
+                <p className="mt-4 max-w-sm text-paper/70">{t.visit.contactBody}</p>
+
+                <div className="mt-8 space-y-2">
+                  {[
+                    {
+                      href: `tel:${t.visit.phone.replace(/\s/g, "")}`,
+                      external: false,
+                      icon: <PhoneIcon className="h-5 w-5" />,
+                      label: t.visit.phoneTitle,
+                      value: t.visit.phone,
+                    },
+                    {
+                      href: waLink,
+                      external: true,
+                      icon: <WaIcon className="h-5 w-5" />,
+                      label: "WhatsApp",
+                      value: locale === "fr" ? "Discuter en direct" : "Chat with us",
+                    },
+                    {
+                      href: `mailto:${t.visit.email}`,
+                      external: false,
+                      icon: <MailIcon className="h-5 w-5" />,
+                      label: t.visit.emailTitle,
+                      value: t.visit.email,
+                    },
+                  ].map((c) => (
+                    <a
+                      key={c.label}
+                      href={c.href}
+                      {...(c.external ? { target: "_blank", rel: "noreferrer" } : {})}
+                      className="group -mx-3 flex items-center gap-3.5 rounded-xl px-3 py-2.5 transition hover:bg-paper/5"
                     >
-                      <span className="grid h-14 w-14 place-items-center rounded-full bg-forest text-2xl text-paper">
-                        ✓
+                      <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-paper/10 text-peach transition group-hover:bg-peach group-hover:text-ink">
+                        {c.icon}
                       </span>
-                      <p className="max-w-sm text-ink-soft">{t.visit.cSuccess}</p>
-                    </motion.div>
-                  ) : (
-                    <motion.form
-                      key="form"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      onSubmit={(e) => {
-                        e.preventDefault();
-                        const fd = new FormData(e.currentTarget);
-                        fetch("/api/notify", {
-                          method: "POST",
-                          headers: { "Content-Type": "application/json" },
-                          body: JSON.stringify({
-                            type: "contact",
-                            name: fd.get("name"),
-                            email: fd.get("email"),
-                            subject: fd.get("subject"),
-                            message: fd.get("message"),
-                          }),
-                        }).catch(() => {});
-                        setSent(true);
-                      }}
-                      className="space-y-3"
-                    >
-                      <p className="font-display text-lg text-ink">
-                        {locale === "fr" ? "Écrivez-nous" : "Drop us a line"}
-                      </p>
-                      <div className="grid gap-3 sm:grid-cols-2">
-                        <input type="text" name="name" required placeholder={t.visit.cName} className={fieldClass} />
-                        <input type="email" name="email" required placeholder={t.visit.cEmail} className={fieldClass} />
-                      </div>
-                      <select name="subject" required defaultValue="" className={fieldClass}>
-                        <option value="" disabled>
-                          {t.visit.cSubject}
-                        </option>
-                        {t.visit.cSubjectOptions.map((o) => (
-                          <option key={o} value={o}>
-                            {o}
-                          </option>
-                        ))}
-                      </select>
-                      <textarea
-                        rows={4}
-                        name="message"
-                        required
-                        placeholder={t.visit.cMessage}
-                        className={fieldClass}
-                      />
-                      <button
-                        type="submit"
-                        className="w-full rounded-full bg-chili px-6 py-3.5 text-sm font-semibold text-paper transition hover:bg-chili-deep"
-                      >
-                        {t.visit.cSubmit}
-                      </button>
-                    </motion.form>
-                  )}
-                </AnimatePresence>
+                      <span className="min-w-0 flex-1">
+                        <span className="block text-[0.65rem] uppercase tracking-wider text-paper/50">
+                          {c.label}
+                        </span>
+                        <span className="block truncate font-display text-base text-paper">
+                          {c.value}
+                        </span>
+                      </span>
+                      <span className="text-paper/30 transition-all group-hover:translate-x-1 group-hover:text-peach">
+                        →
+                      </span>
+                    </a>
+                  ))}
+                </div>
               </div>
-            </Reveal>
 
-            {/* action tiles — transparentes, sobres */}
-            <div className="flex flex-col gap-3 lg:col-span-5">
-              {[
-                {
-                  href: `tel:${t.visit.phone.replace(/\s/g, "")}`,
-                  external: false,
-                  icon: <PhoneIcon className="h-5 w-5" />,
-                  label: t.visit.phoneTitle,
-                  value: t.visit.phone,
-                  delay: 0.15,
-                },
-                {
-                  href: waLink,
-                  external: true,
-                  icon: <WaIcon className="h-6 w-6" />,
-                  label: "WhatsApp",
-                  value: locale === "fr" ? "Discuter en direct" : "Chat with us",
-                  delay: 0.2,
-                },
-                {
-                  href: `mailto:${t.visit.email}`,
-                  external: false,
-                  icon: <MailIcon className="h-5 w-5" />,
-                  label: t.visit.emailTitle,
-                  value: t.visit.email,
-                  delay: 0.25,
-                },
-              ].map((tile) => (
-                <Reveal key={tile.label} delay={tile.delay}>
-                  <a
-                    href={tile.href}
-                    {...(tile.external ? { target: "_blank", rel: "noreferrer" } : {})}
-                    className="group flex items-center gap-3.5 rounded-2xl border border-line bg-transparent p-3.5 text-ink transition duration-300 hover:-translate-y-0.5 hover:border-ink/25 hover:bg-paper hover:shadow-[0_14px_30px_-22px_rgba(27,26,22,0.45)]"
+              {/* right: form */}
+              <AnimatePresence mode="wait">
+                {sent ? (
+                  <motion.div
+                    key="ok"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="flex min-h-[300px] items-center gap-3 rounded-2xl bg-paper/5 p-6 text-paper/90"
                   >
-                    <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-cream-deep text-ink transition-colors duration-300 group-hover:bg-ink group-hover:text-paper">
-                      {tile.icon}
+                    <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-peach text-2xl text-ink">
+                      ✓
                     </span>
-                    <span className="min-w-0 flex-1">
-                      <span className="block text-[0.7rem] uppercase tracking-wider text-ink-soft">
-                        {tile.label}
-                      </span>
-                      <span className="block truncate font-display text-base text-ink">{tile.value}</span>
-                    </span>
-                    <span className="text-ink-soft transition-transform group-hover:translate-x-1">→</span>
-                  </a>
-                </Reveal>
-              ))}
+                    {t.visit.cSuccess}
+                  </motion.div>
+                ) : (
+                  <motion.form
+                    key="form"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      const fd = new FormData(e.currentTarget);
+                      fetch("/api/notify", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                          type: "contact",
+                          name: fd.get("name"),
+                          email: fd.get("email"),
+                          subject: fd.get("subject"),
+                          message: fd.get("message"),
+                        }),
+                      }).catch(() => {});
+                      setSent(true);
+                    }}
+                    className="space-y-3.5"
+                  >
+                    <div className="grid gap-3.5 sm:grid-cols-2">
+                      <input type="text" name="name" required placeholder={t.visit.cName} className={fieldClass} />
+                      <input type="email" name="email" required placeholder={t.visit.cEmail} className={fieldClass} />
+                    </div>
+                    <select name="subject" required defaultValue="" className={fieldClass}>
+                      <option value="" disabled className="text-ink">
+                        {t.visit.cSubject}
+                      </option>
+                      {t.visit.cSubjectOptions.map((o) => (
+                        <option key={o} value={o} className="text-ink">
+                          {o}
+                        </option>
+                      ))}
+                    </select>
+                    <textarea
+                      rows={4}
+                      name="message"
+                      required
+                      placeholder={t.visit.cMessage}
+                      className={fieldClass}
+                    />
+                    <button
+                      type="submit"
+                      className="w-full rounded-full bg-peach px-6 py-3.5 text-sm font-semibold text-ink transition hover:bg-paper"
+                    >
+                      {t.visit.cSubmit}
+                    </button>
+                  </motion.form>
+                )}
+              </AnimatePresence>
             </div>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );
