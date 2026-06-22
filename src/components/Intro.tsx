@@ -13,7 +13,7 @@ export default function Intro() {
     target: imgRef,
     offset: ["start end", "end start"],
   });
-  const y = useTransform(scrollYProgress, [0, 1], ["-11%", "11%"]);
+  const y = useTransform(scrollYProgress, [0, 1], ["-6%", "6%"]);
 
   return (
     <section id="intro" className="bg-cream py-8 md:py-12">
@@ -38,15 +38,15 @@ export default function Intro() {
           <Reveal delay={0.1}>
             <div
               ref={imgRef}
-              className="relative mt-14 aspect-[16/7] w-full overflow-hidden rounded-3xl"
+              className="relative mt-14 aspect-[16/10] w-full overflow-hidden rounded-3xl sm:aspect-[16/9]"
             >
-              <motion.div style={{ y }} className="absolute inset-x-0 -top-[13%] h-[126%]">
+              <motion.div style={{ y }} className="absolute inset-x-0 -top-[6%] h-[112%]">
                 <Image
-                  src="/gallery/gyoza.jpg"
-                  alt=""
+                  src="/intro-gyoza.jpg"
+                  alt="Gyozas poêlés maison"
                   fill
-                  sizes="100vw"
-                  className="object-cover"
+                  sizes="(max-width:768px) 100vw, 1200px"
+                  className="object-cover object-center"
                 />
               </motion.div>
               <div className="absolute inset-0 bg-gradient-to-t from-forest-deep/40 to-transparent" />

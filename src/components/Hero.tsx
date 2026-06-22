@@ -143,34 +143,7 @@ export default function Hero() {
             {t.hero.ctaSecondary}
           </a>
         </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.2, duration: 0.8 }}
-          className="mt-10 inline-flex items-center gap-2 rounded-full border border-line bg-paper/60 px-4 py-1.5 text-xs font-medium text-ink-soft backdrop-blur"
-        >
-          <span className="grid grid-cols-3 gap-[3px]">
-            {Array.from({ length: 9 }).map((_, i) => (
-              <span key={i} className="h-[3px] w-[3px] rounded-full bg-chili" />
-            ))}
-          </span>
-          {t.hero.hint}
-        </motion.div>
       </div>
-
-      {/* scroll cue */}
-      <a
-        href="#intro"
-        className="absolute bottom-6 left-1/2 z-20 flex -translate-x-1/2 flex-col items-center gap-2 text-[0.65rem] uppercase tracking-[0.25em] text-ink-soft"
-      >
-        {t.hero.scroll}
-        <motion.span
-          animate={{ y: [0, 7, 0] }}
-          transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}
-          className="block h-8 w-px bg-ink-soft/50"
-        />
-      </a>
     </section>
   );
 }

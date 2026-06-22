@@ -58,6 +58,14 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="fr">
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "if('scrollRestoration' in history){history.scrollRestoration='manual';}",
+          }}
+        />
+      </head>
       <body className={`${fraunces.variable} ${inter.variable} grain`}>
         <LanguageProvider>
           <StoreProvider>{children}</StoreProvider>
