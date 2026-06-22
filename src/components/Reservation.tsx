@@ -49,7 +49,7 @@ export default function Reservation() {
 
   return (
     <section id="reservation" className="bg-cream-deep">
-      <div className="mx-auto max-w-7xl px-5 py-24 md:px-8 md:py-32">
+      <div className="mx-auto max-w-7xl px-5 pb-24 pt-12 md:px-8 md:pb-32 md:pt-16">
         <div className="mx-auto max-w-2xl text-center">
           <Reveal>
             <p className="eyebrow text-chili">{t.reservation.eyebrow}</p>
