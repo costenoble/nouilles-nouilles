@@ -259,7 +259,7 @@ export default function Menu() {
 
   return (
     <section id="menu" className="bg-cream-deep">
-      <div className="mx-auto max-w-7xl px-5 py-24 md:px-8 md:py-32">
+      <div className="mx-auto max-w-7xl px-5 pb-14 pt-24 md:px-8 md:pb-16 md:pt-32">
         {/* header */}
         <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
           <div>

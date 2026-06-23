@@ -49,7 +49,7 @@ export default function Reservation() {
 
   return (
     <section id="reservation" className="bg-cream-deep">
-      <div className="mx-auto max-w-7xl px-5 pb-24 pt-12 md:px-8 md:pb-32 md:pt-16">
+      <div className="mx-auto max-w-7xl px-5 pb-24 pt-4 md:px-8 md:pb-32 md:pt-8">
         <div className="mx-auto max-w-2xl text-center">
           <Reveal>
             <p className="eyebrow text-chili">{t.reservation.eyebrow}</p>
@@ -100,7 +100,7 @@ export default function Reservation() {
               ) : (
                 <div key="form" className="grid lg:grid-cols-[0.85fr_1.15fr]">
                   {/* visual / recap */}
-                  <div className="flex flex-col items-center justify-center gap-6 bg-gradient-to-b from-cream-deep to-peach/25 p-8 sm:p-10">
+                  <div className="flex flex-col items-center justify-center gap-5 bg-gradient-to-b from-cream-deep to-peach/25 p-6 sm:p-10">
                     <AnalogClock time={time} />
                     <div className="w-full space-y-2.5 text-sm">
                       <div className="flex items-center justify-between border-b border-line pb-2.5">

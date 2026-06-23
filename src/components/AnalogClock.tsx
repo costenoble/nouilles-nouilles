@@ -12,8 +12,8 @@ export default function AnalogClock({ time }: { time: string }) {
   });
 
   return (
-    <div className="flex flex-col items-center gap-4">
-      <div className="aspect-square w-full max-w-[240px]">
+    <div className="flex flex-col items-center gap-3 sm:gap-4">
+      <div className="aspect-square w-full max-w-[168px] sm:max-w-[240px]">
         <svg viewBox="0 0 200 200" className="h-full w-full">
           {/* face */}
           <circle cx="100" cy="100" r="96" fill="var(--color-paper)" stroke="var(--color-line)" strokeWidth="1.5" />
